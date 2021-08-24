@@ -6,16 +6,25 @@ import UIKit
  */
 @IBDesignable
 class LabelWithPadding: UILabel {
-
-    /** The padding (in points). Will be added to all edges. */
-    @IBInspectable var padding: CGFloat = 8
-
+    
+    /** The padding (in points) for each edge. */
+    @IBInspectable var paddingLeft: CGFloat = 0
+    @IBInspectable var paddingRight: CGFloat = 0
+    @IBInspectable var paddingTop: CGFloat = 0
+    @IBInspectable var paddingBottom: CGFloat = 0
+    
     override func drawText(in rect: CGRect) {
-        super.drawText(in: rect.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)))
+        super.drawText(in: rect.inset(by: UIEdgeInsets(top: paddingTop, left: paddingLeft, bottom: paddingBottom, right: paddingRight)))
     }
-
+    
     override var intrinsicContentSize: CGSize {
         let originalSize = super.intrinsicContentSize
-        return CGSize(width: originalSize.width + padding * 2, height: originalSize.height + padding * 2)
+        return CGSize(width: originalSize.width + paddingLeft + paddingRight, height: originalSize.height + paddingTop + paddingBottom)
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            preferredMaxLayoutWidth = bounds.width - (paddingLeft + paddingRight)
+        }
     }
 }

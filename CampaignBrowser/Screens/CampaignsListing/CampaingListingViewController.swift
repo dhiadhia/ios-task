@@ -19,6 +19,9 @@ class CampaignListingViewController: UIViewController {
         super.viewDidLoad()
 
         assert(typedView != nil)
+        
+        let layout = typedView.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.estimatedItemSize = CGSize(width: 375, height: 350)
     }
 
     override func viewWillAppear(_ animated: Bool) {
